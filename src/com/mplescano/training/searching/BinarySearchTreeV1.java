@@ -1,6 +1,7 @@
 package com.mplescano.training.searching;
 
 import com.mplescano.training.datastructure.BinaryNode;
+import com.mplescano.training.datastructure.BinaryNodeH;
 
 public class BinarySearchTreeV1<T extends Comparable<T>> {
 
@@ -45,10 +46,10 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 	
 	public static <T extends Comparable<T>> BinaryNode<T> insert(BinaryNode<T> current, T data) {
 		if (current == null) {
-			return new BinaryNode<T>(data);
+			current = new BinaryNode<T>(data);
 		}
 		else {
-			if (current.getItem().compareTo(data) >= 0) {
+			if (current.getItem().compareTo(data) > 0) {//>=??
 				current.setChildLeft(insert(current.getChildLeft(), data));
 			}
 			else {
@@ -58,6 +59,54 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 		return current;
 	}
 	
+	private static int height(BinaryNodeH<?> current) {
+		return current == null? -1 : current.getHeight();
+	}
+	
+	/**
+	 * @see http://www.sanfoundry.com/java-program-implement-self-balancing-binary-search-tree/
+	 * @see https://www.hackerrank.com/challenges/self-balancing-tree
+	 * 
+	 * @param current
+	 * @param data
+	 * @return
+	 */
+	public static <T extends Comparable<T>> BinaryNodeH<T> insertInSelfBalanceTree(BinaryNodeH<T> current, T data) {
+		if (current == null) {
+			current = new BinaryNodeH<T>(data, 0);
+		}
+		else if (current.getItem().compareTo(data) > 0) {
+			current.setChildLeft(insertInSelfBalanceTree(current.getChildLeft(), data));
+			if (height(current.getChildLeft()) - height(current.getChildRight()) == 2) {
+				if (current.getChildLeft().getItem().compareTo(data) > 0) {
+					current = rotateWithLeftChild(current);
+				}
+				else {
+					current = doubleWithLeftChild(current);
+				}
+			}
+		}
+		else if (current.getItem().compareTo(data) < 0) {
+			current.setChildRight(insertInSelfBalanceTree(current.getChildRight(), data));
+		}
+		
+		
+		return current;
+	}
+	
+	private static <T extends Comparable<T>> BinaryNodeH<T> doubleWithLeftChild(BinaryNodeH<T> current) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/* Rotate binary tree node with left child */   
+	private static <T extends Comparable<T>> BinaryNodeH<T> rotateWithLeftChild(BinaryNodeH<T> current) {
+		BinaryNodeH<T> oldLeft = current.getChildLeft();
+		current.setChildLeft(oldLeft.getChildRight());
+		oldLeft.setChildRight(current);
+		return null;
+	}
+
 	public static <T extends Comparable<Integer>> boolean isBST(BinaryNode<Integer> current) {
 		return isBST(current, Integer.valueOf(Integer.MIN_VALUE), Integer.valueOf(Integer.MAX_VALUE));
 	}
@@ -72,6 +121,8 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 		
 		return isBST(current.getChildLeft(), min, current.getItem()) && isBST(current.getChildRight(), current.getItem(), max);
 	}
+	
+	
 	
     /* Driver program to test above functions */
     public static void main(String args[])
