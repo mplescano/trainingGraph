@@ -8,14 +8,15 @@ import java.util.Random;
  * 
  * 
  * 
- * @author njoaquin.programador
+ * @author mlescano
  *
  * @param <T>
  */
 public class AlgorithmsSort {
 
 	/**
-	 * Time Complexity: O(n^2) - Horrible Space Complexity: O(1) - Excellent
+	 * Time Complexity: O(n^2) - Horrible 
+	 * Space Complexity: O(1) - Excellent
 	 * 
 	 * @see https://en.wikipedia.org/wiki/Bubble_sort
 	 * 
@@ -36,7 +37,8 @@ public class AlgorithmsSort {
 	}
 
 	/**
-	 * Time Complexity: O(n^2) - Horrible Space Complexity: O(1) - Excellent
+	 * Time Complexity: O(n^2) - Horrible 
+	 * Space Complexity: O(1) - Excellent
 	 * 
 	 * @see https://en.wikipedia.org/wiki/Insertion_sort
 	 * 

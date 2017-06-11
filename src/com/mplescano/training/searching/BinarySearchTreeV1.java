@@ -95,7 +95,12 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 	}
 	
 	private static <T extends Comparable<T>> BinaryNodeH<T> doubleWithLeftChild(BinaryNodeH<T> current) {
-		// TODO Auto-generated method stub
+		current.setChildLeft(rotateWithRightChild(current.getChildLeft()));
+		return rotateWithLeftChild(current);
+	}
+
+	private static <T extends Comparable<T>> BinaryNodeH<T> rotateWithRightChild(BinaryNodeH<T> childLeft) {
+		
 		return null;
 	}
 
@@ -104,7 +109,11 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 		BinaryNodeH<T> oldLeft = current.getChildLeft();
 		current.setChildLeft(oldLeft.getChildRight());
 		oldLeft.setChildRight(current);
-		return null;
+		
+		current.setHeight(Math.max(height(current.getChildLeft()), height(current.getChildRight())) + 1);
+		oldLeft.setHeight(Math.max(height(oldLeft.getChildLeft()), current.getHeight()) + 1);
+		
+		return oldLeft;
 	}
 
 	public static <T extends Comparable<Integer>> boolean isBST(BinaryNode<Integer> current) {
@@ -122,6 +131,28 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 		return isBST(current.getChildLeft(), min, current.getItem()) && isBST(current.getChildRight(), current.getItem(), max);
 	}
 	
+	
+	public static void printPreOrder(BinaryNode<Integer> current) {
+		if (current == null) {
+			return;
+		}
+		System.out.print(current.getItem() + " ");
+		printPreOrder(current.getChildLeft());
+		printPreOrder(current.getChildRight());
+	}
+	
+	public static void printPostOrder(BinaryNode<Integer> current) {
+		if (current == null) {
+			return;
+		}
+		//left tree
+		printPostOrder(current.getChildLeft());
+		
+		//right tree
+		printPostOrder(current.getChildRight());
+		
+		System.out.print(current.getItem() + " ");
+	}
 	
 	
     /* Driver program to test above functions */
