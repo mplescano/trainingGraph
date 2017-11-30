@@ -22,7 +22,7 @@ public class BinaryNodeH<Item extends Comparable<Item>> extends BinaryNode<Item>
 	}
 
 	public void setChildLeft(BinaryNodeH<Item> prev) {
-		this.setChildLeft(prev);
+		super.setChildLeft(prev);
 	}
 	
 	public BinaryNodeH<Item> getChildRight() {
@@ -30,6 +30,6 @@ public class BinaryNodeH<Item extends Comparable<Item>> extends BinaryNode<Item>
 	}
 
 	public void setChildRight(BinaryNodeH<Item> next) {
-		this.setChildRight(next);
+		super.setChildRight(next);
 	}
 }

@@ -8,13 +8,13 @@ import java.util.NoSuchElementException;
  *
  * @param <Item>
  */
-public class CrunchifyLinkedList<Item> implements Iterable<Item> {
+public class SinglyLinkedList<Item> implements Iterable<Item> {
 	
 	private Node<Item> head;
 	
 	private int size;
 	
-	public CrunchifyLinkedList() {
+	public SinglyLinkedList() {
 		head = null;
 		size = 0;
 	}
@@ -92,7 +92,7 @@ public class CrunchifyLinkedList<Item> implements Iterable<Item> {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        CrunchifyLinkedList<String> linkedList = new CrunchifyLinkedList<String>();
+        SinglyLinkedList<String> linkedList = new SinglyLinkedList<String>();
         linkedList.add("one");
         linkedList.add("two");
         linkedList.add("three");

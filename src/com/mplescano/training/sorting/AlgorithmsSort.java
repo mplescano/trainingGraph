@@ -24,16 +24,17 @@ public class AlgorithmsSort {
 	 */
 	public static <T extends Comparable<T>> void bubbleSort(List<T> lstItems) {
 		int limitUpper = lstItems.size();
-		do {
-			int posLastSwap = 0;
+		boolean swapped = true;
+		while (swapped) {
+			swapped = false;
 			for (int currCount = 1; currCount < limitUpper; currCount++) {
 				if (lstItems.get(currCount - 1).compareTo(lstItems.get(currCount)) > 0) {
 					swap(currCount - 1, currCount, lstItems);
-					posLastSwap = currCount;
+					swapped = true;
 				}
 			}
-			limitUpper = posLastSwap;
-		} while (limitUpper == 0);
+			limitUpper--;
+		};
 	}
 
 	/**

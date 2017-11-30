@@ -11,6 +11,13 @@ public class DoubleLinkNode<Item> {
 	public DoubleLinkNode(Item item) {
 		this.item = item;
 	}
+	
+	public DoubleLinkNode(Item item, DoubleLinkNode<Item> next, 
+			DoubleLinkNode<Item> prev) {
+		this.item = item;
+		setNext(next);
+		setPrev(prev);
+	}
 
 	public DoubleLinkNode<Item> getPrev() {
 		return prev;
