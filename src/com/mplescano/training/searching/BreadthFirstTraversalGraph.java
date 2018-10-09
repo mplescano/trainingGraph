@@ -12,23 +12,24 @@ public class BreadthFirstTraversalGraph {
 	private SimpleTreeNodeV2<Long>[] adj;
 
 	// Constructor
-	BreadthFirstTraversalGraph(int v) {
-		size = v;
-		adj = new SimpleTreeNodeV2[v];
-		for (int i = 0; i < v; ++i)
-			adj[i] = new SimpleTreeNodeV2<Long>((long) i, Long.valueOf(i));
+	BreadthFirstTraversalGraph(int numberVertices) {
+		size = numberVertices;
+		adj = new SimpleTreeNodeV2[numberVertices];
+		for (int countPos = 0; countPos < numberVertices; countPos++) {
+			adj[countPos] = new SimpleTreeNodeV2<>((long) countPos, Long.valueOf(countPos));
+		}
 	}
 
 	// Function to add an edge into the graph
-	void addEdge(int v, int w) {
+	void addEdge(int parentPos, int childValue) {
 		SimpleTreeNodeV2<Long> childNode = null;
-		for (int i = 0; i < size; i++) {
-			if (adj[i].getData() != null && adj[i].getData().compareTo(Long.valueOf(w)) == 0) {
-				childNode = adj[i];
+		for (int countPos = 0; countPos < size; countPos++) {
+			if (adj[countPos].getData() != null && adj[countPos].getData().compareTo(Long.valueOf(childValue)) == 0) {
+				childNode = adj[countPos];
 			}
 		}
 
-		adj[v].addChild(childNode); // Add w to v's list.
+		adj[parentPos].addChild(childNode); // Add w to v's list.
 	}
 
 	// prints BFS traversal from a given source s
@@ -40,13 +41,13 @@ public class BreadthFirstTraversalGraph {
 		}
 
 		// Create a queue for BFS
-		LinkedList<SimpleTreeNodeV2<Long>> queue = new LinkedList<SimpleTreeNodeV2<Long>>();
+		LinkedList<SimpleTreeNodeV2<Long>> queue = new LinkedList<>();
 
 		// Mark the current node as visited and enqueue it
 		adj[s].setVisited(true);
 		queue.add(adj[s]);
 
-		while (queue.size() != 0) {
+		while (!queue.isEmpty()) {
 			// Dequeue a vertex from queue and print it
 			SimpleTreeNodeV2<Long> node = queue.poll();
 			System.out.print(node.getKey() + " ");
@@ -54,12 +55,12 @@ public class BreadthFirstTraversalGraph {
 			// Get all adjacent vertices of the dequeued vertex s
 			// If a adjacent has not been visited, then mark it
 			// visited and enqueue it
-			Iterator<SimpleTreeNodeV2<Long>> i = adj[(int) node.getKey()].getChildren().iterator();
-			while (i.hasNext()) {
-				long n = i.next().getKey();
-				if (!adj[(int) n].isVisited()) {
-					adj[(int) n].setVisited(true);
-					queue.add(adj[(int) n]);
+			Iterator<SimpleTreeNodeV2<Long>> iteratorChildrens = adj[(int) node.getKey()].getChildren().iterator();
+			while (iteratorChildrens.hasNext()) {
+				long childKey = iteratorChildrens.next().getKey();
+				if (!adj[(int) childKey].isVisited()) {
+					adj[(int) childKey].setVisited(true);
+					queue.add(adj[(int) childKey]);
 				}
 			}
 		}

@@ -7,11 +7,11 @@ public class SimpleTreeNodeV2<T> {
 
 	private T data;
 	
-	private List<SimpleTreeNodeV2<T>> childrens = new ArrayList<SimpleTreeNodeV2<T>>();
-	
 	private boolean visited = false;
 	
 	private long key;
+	
+	private List<SimpleTreeNodeV2<T>> childrens = new ArrayList<SimpleTreeNodeV2<T>>();
 	
 	public SimpleTreeNodeV2() {
 	}
@@ -67,6 +67,11 @@ public class SimpleTreeNodeV2<T> {
 
 	public long getKey() {
 		return key;
+	}
+
+	@Override
+	public String toString() {
+		return "SimpleTreeNodeV2 [data=" + data + ", key=" + key + "]";
 	}
     
 	
