@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.mplescano.training.datastructure.SimpleTreeNodeV2;
 
@@ -21,41 +20,7 @@ public class BreadthFirstTraversalGraphV2<T> {
 		this.goalNode = goalNode;
 	}
 
-	// prints BFS traversal from a given source s
 	ResultCompute<T> compute() {
-		LinkedList<SimpleTreeNodeV2<T>> queue = new LinkedList<>();
-		List<SimpleTreeNodeV2<T>> explored = new ArrayList<>();
-		queue.add(startNode);
-		startNode.setVisited(true);
-		//explored.add(startNode);
-		if (startNode.equals(goalNode)) {
-			return new ResultCompute<>(true, explored);
-		}
-		
-		while (!queue.isEmpty()) {
-			SimpleTreeNodeV2<T> currentNode = queue.poll();
-			if (goalNode != null && currentNode.equals(goalNode)) {
-				explored.add(currentNode);
-				return new ResultCompute<>(true, explored);
-			}
-			else {
-				if (currentNode.getChildren().isEmpty()) {
-					if (currentNode.isVisited()) {
-						explored.add(currentNode);						
-					}
-					return new ResultCompute<>(false, explored);
-				}
-				else {
-					queue.addAll(currentNode.getChildren().stream().filter(item -> !item.isVisited()).collect(Collectors.toList()));
-				}
-			}
-			explored.add(currentNode);
-			currentNode.setVisited(true);
-		}
-		return new ResultCompute<>(false, explored);
-	}
-	
-	ResultCompute<T> compute2() {
 		LinkedList<SimpleTreeNodeV2<T>> queue = new LinkedList<>();
 		List<SimpleTreeNodeV2<T>> explored = new ArrayList<>();
 		queue.add(startNode);
@@ -121,7 +86,7 @@ public class BreadthFirstTraversalGraphV2<T> {
 		station6.addChild(station4);
 		
 		BreadthFirstTraversalGraphV2<String> gSearch1 = new BreadthFirstTraversalGraphV2<>(station6, station1);
-		ResultCompute<String> result1 = gSearch1.compute2();
+		ResultCompute<String> result1 = gSearch1.compute();
 		if (result1.isResult()) {
 			System.out.println("Path Found!");
 			System.out.println(result1.getExplored());
@@ -139,7 +104,7 @@ public class BreadthFirstTraversalGraphV2<T> {
 		arrStations[2].addChild(arrStations[3]);
 		arrStations[3].addChild(arrStations[3]);
 		BreadthFirstTraversalGraphV2<Integer> gSearch2 = new BreadthFirstTraversalGraphV2<>(arrStations[2], null);
-		ResultCompute<Integer> result2 = gSearch2.compute2();
+		ResultCompute<Integer> result2 = gSearch2.compute();
 		if (result2.isResult()) {
 			System.out.println("Path Found!");
 			System.out.println(result2.getExplored());
