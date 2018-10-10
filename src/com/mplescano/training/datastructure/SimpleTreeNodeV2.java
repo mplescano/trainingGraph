@@ -11,6 +11,10 @@ public class SimpleTreeNodeV2<T> {
 	
 	private long key;
 	
+	private long keyParent;
+	
+	private long level;
+	
 	private List<SimpleTreeNodeV2<T>> childrens = new ArrayList<SimpleTreeNodeV2<T>>();
 	
 	public SimpleTreeNodeV2() {
@@ -69,10 +73,26 @@ public class SimpleTreeNodeV2<T> {
 		return key;
 	}
 
+	public long getKeyParent() {
+		return keyParent;
+	}
+
+	public void setKeyParent(long keyParent) {
+		this.keyParent = keyParent;
+	}
+	
+	public long getLevel() {
+		return level;
+	}
+
+	public void setLevel(long level) {
+		this.level = level;
+	}
+
 	@Override
 	public String toString() {
-		return "SimpleTreeNodeV2 [data=" + data + ", key=" + key + "]";
+		return "SimpleTreeNodeV2 [data=" + data + ", key=" + key + ", keyParent="
+				+ keyParent + ", level=" + level + "]";
 	}
-    
-	
+
 }
