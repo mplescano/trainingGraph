@@ -42,7 +42,7 @@ public class BreadthFirstTraversalGraphV3<T> {
 			}
 			explored.add(currentNode);
 		}
-		return new ResultCompute<>(false, explored);
+		return new ResultCompute<>(true, explored);
 	}
 	
 	static class ResultCompute<T> {
@@ -80,7 +80,7 @@ public class BreadthFirstTraversalGraphV3<T> {
 		station6.addChild(station4);
 		
 		BreadthFirstTraversalGraphV3<String> gSearch1 = new BreadthFirstTraversalGraphV3<String>(new SimpleTreeNodeV2[] {station1, station2, station3, station4, station5, station6});
-		ResultCompute<String> result1 = gSearch1.computeLevelAndParents(0);
+		ResultCompute<String> result1 = gSearch1.computeLevelAndParents(5);
 		if (result1.isResult()) {
 			System.out.println("Path Found!");
 			System.out.println(result1.getExplored());
