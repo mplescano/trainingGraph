@@ -46,7 +46,7 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 	
 	public static <T extends Comparable<T>> BinaryNode<T> insert(BinaryNode<T> current, T data) {
 		if (current == null) {
-			current = new BinaryNode<T>(data);
+			current = new BinaryNode<>(data);
 		}
 		else {
 			if (current.getItem().compareTo(data) > 0) {//>=??
@@ -73,7 +73,7 @@ public class BinarySearchTreeV1<T extends Comparable<T>> {
 	 */
 	public static <T extends Comparable<T>> BinaryNodeH<T> insertInSelfBalanceTree(BinaryNodeH<T> current, T data) {
 		if (current == null) {
-			current = new BinaryNodeH<T>(data, 0);
+			current = new BinaryNodeH<>(data, 0);
 		}
 		else if (current.getItem().compareTo(data) > 0) {
 			current.setChildLeft(insertInSelfBalanceTree(current.getChildLeft(), data));

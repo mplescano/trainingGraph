@@ -3,7 +3,7 @@ package com.mplescano.training.sorting;
 //[2,5] [3,7,8]
 //[6,8,9] [3,4,7]
 //[1,2,7] [4,5]
-public class TestExam {
+public class TestExamAmazon {
 
 	public int[] sorter(int[] arrInt01, int[] arrInt02) {
 		
@@ -54,7 +54,7 @@ public class TestExam {
 	}
 	
 	public static void main(String[] args) {
-		TestExam objTestExam = new TestExam();
+		TestExamAmazon objTestExam = new TestExamAmazon();
 		
 		int[] arrMerge = objTestExam.sorter(new int[]{1, 2, 7},  new int[]{4, 5});
 		for (int itemInt : arrMerge) {

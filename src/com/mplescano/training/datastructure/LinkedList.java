@@ -3,7 +3,7 @@ package com.mplescano.training.datastructure;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<Item> implements Iterable<Item> {
+public class LinkedList<Item> implements Iterable<Node<Item>> {
     
     private Node<Item> head;
     
@@ -11,6 +11,7 @@ public class LinkedList<Item> implements Iterable<Item> {
     
     public LinkedList() {
         this.head = null;
+        this.size = 0;
     }
     
     public boolean isEmpty() {
@@ -35,36 +36,97 @@ public class LinkedList<Item> implements Iterable<Item> {
         size++;        
     }
 
+	public void remove(Node<Item> nodeParam) {
+        Node<Item> prevTempNode = null;
+        Node<Item> tempNode = head;
+        if (tempNode == null) {
+        	return;
+        }
+        do {
+        	if (tempNode.equals(nodeParam)) {
+        		if (prevTempNode == null) {
+        			head = tempNode.getNext();
+        		}
+        		else {
+        			prevTempNode.setNext(tempNode.getNext());
+        		}
+    			tempNode.setNext(null);
+    			size--;
+        		break;
+        	}
+        	prevTempNode = tempNode;
+        	tempNode = tempNode.getNext();
+        }
+        while(tempNode != null);
+	}
+	
+	public void removeLast() {
+		Node<Item> prevTempNode = null;
+        Node<Item> tempNode = head;
+        if (tempNode == null) {
+        	return;
+        }
+        do {
+        	if (tempNode.getNext() == null) {
+        		if (prevTempNode == null) {
+        			head = null;
+        		}
+        		else {
+            		prevTempNode.setNext(null);
+        		}
+    			size--;
+        	}
+        	prevTempNode = tempNode;
+        	tempNode = tempNode.getNext();
+        }
+        while(tempNode != null);
+	}
+    
     @Override
-    public Iterator<Item> iterator() {
-        return new ListIterator<Item>(head);
+    public Iterator<Node<Item>> iterator() {
+        return new ListIterator(head, this);
     }
 
-    private class ListIterator<Item> implements Iterator<Item> {
+    private class ListIterator implements Iterator<Node<Item>> {
 
-        private Node<Item> current;
+    	private Node<Item> previous;
+    	
+    	private Node<Item> current;
+    	
+    	private LinkedList<Item> linkedList;
 
-        public ListIterator(Node<Item> item) {
-            current = item;
-        }
+        public ListIterator(Node<Item> nodeItem, LinkedList<Item> linkedList) {
+            this.current = nodeItem;
+            this.linkedList = linkedList;
+		}
 
-        public boolean hasNext() {
+		public boolean hasNext() {
             return current != null;
         }
 
         @Override
-        public Item next() {
+        public Node<Item> next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
             }
-            Item item = current.getItem();
+            Node<Item> returnItem = current;
+            previous = current;
             current = current.getNext();
-            return item;
+            return returnItem;
         }
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException();
+    		Node<Item> newCurrent = current.getNext();
+        	if (previous != null) {
+        		previous.setNext(newCurrent);
+        	}
+        	current.setNext(null);
+    		current = newCurrent;
+    		if (previous == null) {
+    			linkedList.head = current;
+    		}
+    		linkedList.size--;
         }
 
     }
@@ -77,8 +139,8 @@ public class LinkedList<Item> implements Iterable<Item> {
         linkedList.add("four");
 
         System.out.println("size of linkedList = " + linkedList.size());
-        for (String s : linkedList) {
-            System.out.println(s);
+        for (Node<String> s : linkedList) {
+            System.out.println(s.getItem());
         }
     }
     
