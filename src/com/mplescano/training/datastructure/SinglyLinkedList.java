@@ -3,104 +3,145 @@ package com.mplescano.training.datastructure;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * @author mplescano
- *
- * @param <Item>
- */
-public class SinglyLinkedList<Item> implements Iterable<Item> {
-	
-	private Node<Item> head;
-	
-	private int size;
-	
-	public SinglyLinkedList() {
-		head = null;
-		size = 0;
+public class SinglyLinkedList<Item> implements Iterable<Node<Item>> {
+    
+    private Node<Item> head;
+    
+    private int size;
+    
+    public SinglyLinkedList() {
+        this.head = null;
+        this.size = 0;
+    }
+    
+    public boolean isEmpty() {
+        return head == null;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public void add(Item item) {
+        if (head == null) {
+            head = new Node<Item>(item);
+        }
+        else {
+            Node<Item> tempNode = head;
+            while (tempNode.getNext() != null) {
+                tempNode = tempNode.getNext();
+            }
+            tempNode.setNext(new Node<Item>(item));
+        }
+        size++;        
+    }
+
+	public void remove(Node<Item> nodeParam) {
+        Node<Item> prevTempNode = null;
+        Node<Item> tempNode = head;
+        if (tempNode == null) {
+        	return;
+        }
+        do {
+        	if (tempNode.equals(nodeParam)) {
+        		if (prevTempNode == null) {
+        			head = tempNode.getNext();
+        		}
+        		else {
+        			prevTempNode.setNext(tempNode.getNext());
+        		}
+    			tempNode.setNext(null);
+    			size--;
+        		break;
+        	}
+        	prevTempNode = tempNode;
+        	tempNode = tempNode.getNext();
+        }
+        while(tempNode != null);
 	}
 	
-	/**
-	 * the added element becomes the last in the tail
-	 * 
-	 * Appends the specified element to the end of this list
-	 *  
-	 * @param data
-	 */
-	public void add(Item data) {
-		if (head == null) {
-			head = new Node<Item>(data);
-		}
-		else {
-			Node<Item> nodeTemp = new Node<Item>(data);
-			Node<Item> nodeCurrent = head;
-			while (nodeCurrent.getNext() != null) {
-				nodeCurrent = nodeCurrent.getNext();
-			}
-			nodeCurrent.setNext(nodeTemp);
-		}
-		size++;
+	public void removeLast() {
+		Node<Item> prevTempNode = null;
+        Node<Item> tempNode = head;
+        if (tempNode == null) {
+        	return;
+        }
+        do {
+        	if (tempNode.getNext() == null) {
+        		if (prevTempNode == null) {
+        			head = null;
+        		}
+        		else {
+            		prevTempNode.setNext(null);
+        		}
+    			size--;
+        	}
+        	prevTempNode = tempNode;
+        	tempNode = tempNode.getNext();
+        }
+        while(tempNode != null);
 	}
+    
+    @Override
+    public Iterator<Node<Item>> iterator() {
+        return new ListIterator(head, this);
+    }
 
-	@Override
-	public Iterator<Item> iterator() {
-		// TODO Auto-generated method stub
-		return new ListIterator<Item>(head);
-	}
+    private class ListIterator implements Iterator<Node<Item>> {
 
-	private class ListIterator<Item> implements Iterator<Item> {
+    	private Node<Item> previous;
+    	
+    	private Node<Item> current;
+    	
+    	private SinglyLinkedList<Item> linkedList;
 
-		private Node<Item> current;
-		
-		public ListIterator(Node<Item> item) {
-			current = item;
+        public ListIterator(Node<Item> nodeItem, SinglyLinkedList<Item> linkedList) {
+            this.current = nodeItem;
+            this.linkedList = linkedList;
 		}
-		
+
 		public boolean hasNext() {
-			return current != null;
-		}
-		
-		@Override
-		public Item next() {
-			if (!hasNext()) {
-				throw new NoSuchElementException();
-			}
-			Item item = current.getItem();
-			current = current.getNext();
-			return item;
-		}
+            return current != null;
+        }
 
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-		
-	}
-	
-	
-	public boolean isEmpty() {
-		return head == null;
-	}
-	
-	public int size() {
-		return size;
-	}
-	
+        @Override
+        public Node<Item> next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node<Item> returnItem = current;
+            previous = current;
+            current = current.getNext();
+            return returnItem;
+        }
 
-    /**
-     * Unit tests the {@code Bag} data type.
-     *
-     * @param args the command-line arguments
-     */
+        @Override
+        public void remove() {
+    		Node<Item> newCurrent = current.getNext();
+        	if (previous != null) {
+        		previous.setNext(newCurrent);
+        	}
+        	current.setNext(null);
+    		current = newCurrent;
+    		if (previous == null) {
+    			linkedList.head = current;
+    		}
+    		linkedList.size--;
+        }
+
+    }
+    
     public static void main(String[] args) {
         SinglyLinkedList<String> linkedList = new SinglyLinkedList<String>();
         linkedList.add("one");
         linkedList.add("two");
         linkedList.add("three");
         linkedList.add("four");
-        
-        System.out.println("size of bag = " + linkedList.size());
-        for (String s : linkedList) {
-        	System.out.println(s);
+
+        System.out.println("size of linkedList = " + linkedList.size());
+        for (Node<String> s : linkedList) {
+            System.out.println(s.getItem());
         }
     }
+    
 }

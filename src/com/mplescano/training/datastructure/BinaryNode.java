@@ -35,11 +35,9 @@ public class BinaryNode<Item extends Comparable<Item>> {
 	public boolean hasChildrens() {
 		return this.childRight != null || this.childLeft != null;
 	}
-	
-	/*public boolean isLeftChild() {
-		if (parent != null) {
-			return item.compareTo(parent.getItem()) < 0;
-		}
-		return false;
-	}*/
+
+	@Override
+	public String toString() {
+		return "BinaryNode [item=" + item + "]";
+	}
 }
