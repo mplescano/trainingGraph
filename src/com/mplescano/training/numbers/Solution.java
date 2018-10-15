@@ -1,4 +1,4 @@
-package com.mplescano;
+package com.mplescano.training.numbers;
 
 import java.util.Stack;
 
